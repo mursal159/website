@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mursal Aljahmi</title>
+<meta name="description" content="Mursal Aljahmi, Computer Science graduate (Wayne State University) based in Detroit, MI. Software, embedded systems and technical support.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+  // Apply the saved theme before first paint so the page never flashes the wrong one.
+  (function () {
+    try {
+      var saved = localStorage.getItem("ma-theme");
+      if (saved === "light" || saved === "dark") document.documentElement.setAttribute("data-theme", saved);
+    } catch (e) {}
+  })();
+</script>
+<style>
+:root {
+  /* Layout idea: an engineering datasheet on a faint blueprint grid. Expanded name, spec table, ruled sections, a timeline for work. */
+  --paper: #f2f3ef;
+  --surface: #fbfbf9;
+  --panel: #e7e9e3;
+  --ink: #1a1f25;
+  --muted: #5a626c;
+  --rule: #cfd3cb;
+  --grid: rgba(26, 31, 37, 0.045);
+  --accent: #b36500;
+  --accent-soft: rgba(179, 101, 0, 0.12);
+  --ok: #2f7d4f;
+  --shadow: 0 1px 2px rgba(20, 24, 30, 0.06), 0 12px 32px -12px rgba(20, 24, 30, 0.18);
+  --font-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11151a;
+    --surface: #171c22;
+    --panel: #1d232b;
+    --ink: #e8eaec;
+    --muted: #9ba4ae;
+    --rule: #2c333c;
+    --grid: rgba(232, 234, 236, 0.035);
+    --accent: #f2a43a;
+    --accent-soft: rgba(242, 164, 58, 0.14);
+    --ok: #5cc98a;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -16px rgba(0, 0, 0, 0.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11151a;
+  --surface: #171c22;
+  --panel: #1d232b;
+  --ink: #e8eaec;
+  --muted: #9ba4ae;
+  --rule: #2c333c;
+  --grid: rgba(232, 234, 236, 0.035);
+  --accent: #f2a43a;
+  --accent-soft: rgba(242, 164, 58, 0.14);
+  --ok: #5cc98a;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -16px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 250ms ease, color 250ms ease;
+}
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+a:hover { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+::selection { background: var(--accent); color: var(--paper); }
+
+.wrap {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 24px 72px;
+  display: grid;
+  gap: 80px;
+}
+
+/* ---------- Sticky header ---------- */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+.mark {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 125;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.mark i {
+  width: 10px; height: 10px; background: var(--accent); display: inline-block;
+}
+.top-right { display: flex; align-items: center; gap: 22px; }
+.top nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.top nav a {
+  text-decoration: none;
+  position: relative;
+  padding: 2px 0;
+}
+.top nav a::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -2px;
+  height: 2px; background: var(--accent);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 200ms ease;
+}
+.top nav a:hover { color: var(--ink); }
+.top nav a:hover::after { transform: scaleX(1); }
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 6px 12px 6px 8px;
+  cursor: pointer;
+  transition: border-color 200ms ease, background-color 250ms ease;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.theme-toggle .knob {
+  width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.theme-toggle svg { width: 14px; height: 14px; }
+.theme-toggle .sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .sun { display: block; }
+  :root:not([data-theme="light"]) .theme-toggle .moon { display: none; }
+}
+
+/* ---------- Hero ---------- */
+.hero { display: grid; gap: 36px; padding-top: 56px; }
+.status {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-mono); font-size: 0.8125rem; color: var(--muted);
+  width: fit-content;
+  padding: 6px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.status .dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--ok);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 60%, transparent);
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 55%, transparent); }
+  70% { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.name {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 125;
+  font-weight: 800;
+  font-size: clamp(2.8rem, 10vw, 6.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.025em;
+  margin: 0;
+  text-wrap: balance;
+}
+.name .last { color: transparent; -webkit-text-stroke: 2px var(--ink); }
+@supports not (-webkit-text-stroke: 2px black) { .name .last { color: var(--ink); } }
+.name .bar {
+  display: block;
+  height: 6px;
+  width: 140px;
+  background: var(--accent);
+  margin-top: 26px;
+  transform-origin: left center;
+  animation: draw 800ms cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes draw { from { transform: scaleX(0.15); } to { transform: scaleX(1); } }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+.lede-col { display: grid; gap: 28px; }
+.lede {
+  font-size: clamp(1.2rem, 2.3vw, 1.4rem);
+  line-height: 1.5;
+  margin: 0;
+  text-wrap: pretty;
+}
+.lede strong { font-weight: 700; box-shadow: inset 0 -0.42em 0 var(--accent-soft); }
+
+.spec {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--ink);
+  padding: 4px 20px;
+  box-shadow: var(--shadow);
+  transition: background-color 250ms ease;
+}
+.spec dt, .spec dd {
+  margin: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.spec dt:last-of-type, .spec dd:last-of-type { border-bottom: 0; }
+.spec dt {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding-right: 24px;
+  padding-top: 15px;
+}
+.spec dd { font-weight: 600; }
+
+.actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  padding: 11px 18px;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: transform 150ms ease, background-color 150ms ease, color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+}
+.btn svg { width: 14px; height: 14px; transition: transform 150ms ease; }
+.btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+.btn:hover svg { transform: translateX(3px); }
+.btn.primary { background: var(--ink); color: var(--paper); }
+.btn.primary:hover { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 8px 20px -8px var(--accent); }
+:root[data-theme="dark"] .btn.primary:hover { color: #11151a; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary:hover { color: #11151a; } }
+
+/* ---------- Sections ---------- */
+section { display: grid; gap: 28px; }
+.sec-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 10px;
+}
+h2 {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 115;
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  letter-spacing: -0.015em;
+  margin: 0;
+  text-wrap: balance;
+}
+.sec-head span {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+h3 {
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 100;
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* Projects */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.project {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 24px 24px 22px;
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  overflow: hidden;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background-color 250ms ease;
+}
+.project::before {
+  content: "";
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--accent);
+  transform: scaleY(0); transform-origin: top;
+  transition: transform 250ms ease;
+}
+.project:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: color-mix(in srgb, var(--accent) 45%, var(--rule)); }
+.project:hover::before { transform: scaleY(1); }
+.kind {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.project p { margin: 0; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 6px 0 0; }
+.tags li {
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+}
+
+/* Experience timeline */
+.jobs { display: grid; }
+.job {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 28px;
+}
+.when {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  padding-top: 4px;
+  text-align: right;
+}
+.job-body {
+  position: relative;
+  padding: 0 0 36px 28px;
+  border-left: 2px solid var(--rule);
+}
+.job:last-child .job-body { padding-bottom: 4px; }
+.job-body::before {
+  content: "";
+  position: absolute; left: -8px; top: 6px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--paper);
+  border: 3px solid var(--muted);
+  transition: border-color 200ms ease, background-color 250ms ease;
+}
+.job.key .job-body::before { border-color: var(--accent); background: var(--accent); }
+.job:hover .job-body::before { border-color: var(--accent); }
+.org { color: var(--muted); margin: 2px 0 10px; }
+.job ul { margin: 0; padding-left: 18px; display: grid; gap: 5px; max-width: 40em; }
+.job ul li::marker { color: var(--accent); }
+
+/* Skills */
+.skills {
+  display: grid;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  transition: background-color 250ms ease;
+}
+.skill-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 28px;
+  align-items: start;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--rule);
+}
+.skill-row:last-child { border-bottom: 0; }
+.skill-row .label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  padding-top: 7px;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; }
+.chips li {
+  list-style: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 4px 12px;
+  border-radius: 3px;
+  background: var(--panel);
+  border: 1px solid transparent;
+  transition: border-color 150ms ease, color 150ms ease, background-color 150ms ease;
+}
+.chips li:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+/* Contact */
+.contact {
+  position: relative;
+  overflow: hidden;
+  background: #161b21;
+  color: #eef0f2;
+  padding: 44px 40px;
+  border-radius: 4px;
+  display: grid;
+  gap: 20px;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border-top: 4px solid var(--accent);
+}
+:root[data-theme="dark"] .contact { background-color: #1e252d; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .contact { background-color: #1e252d; } }
+.contact h2 { color: #fff; font-size: clamp(1.8rem, 5vw, 2.6rem); font-variation-settings: "wdth" 125; }
+.contact p { margin: 0; max-width: 36em; color: #c3c9d0; }
+.contact .lines { display: grid; gap: 10px; font-family: var(--font-mono); font-size: 0.95rem; }
+.contact .lines a { color: #fff; text-decoration-color: var(--accent); }
+.contact .lines a:hover { color: var(--accent); }
+.contact .lines span { color: var(--accent); display: inline-block; width: 96px; }
+.contact .btn { border-color: #fff; color: #fff; }
+.contact .btn.primary { background: #fff; color: #161b21; }
+.contact .btn.primary:hover { background: var(--accent); border-color: var(--accent); color: #161b21; }
+.copied { font-family: var(--font-mono); font-size: 0.8125rem; color: #c3c9d0; min-height: 1em; }
+
+footer {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: -40px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+@media (max-width: 760px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+  .top nav { display: none; }
+}
+@media (max-width: 640px) {
+  .wrap { padding: 0 18px 56px; gap: 60px; }
+  .hero { padding-top: 36px; }
+  .projects { grid-template-columns: 1fr; }
+  .job { grid-template-columns: 1fr; gap: 6px; }
+  .when { text-align: left; padding-left: 30px; }
+  .skill-row { grid-template-columns: 1fr; gap: 8px; padding: 16px 18px; }
+  .spec { padding: 4px 16px; }
+  .spec dt { padding-right: 14px; }
+  .contact { padding: 32px 22px; }
+  .contact .lines span { width: auto; margin-right: 10px; }
+  .theme-toggle .label { display: none; }
+  .theme-toggle { padding: 6px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a class="mark" href="#top" aria-label="Back to top"><i aria-hidden="true"></i>MA</a>
+    <div class="top-right">
+      <nav aria-label="Sections">
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch between light and dark mode">
+        <span class="knob" aria-hidden="true">
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </span>
+        <span class="label" id="theme-label">Dark</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="hero" id="top">
+    <div class="status"><span class="dot" aria-hidden="true"></span>Available now · Detroit, MI</div>
+    <h1 class="name">Mursal<br><span class="last">Aljahmi</span><span class="bar" aria-hidden="true"></span></h1>
+
+    <div class="hero-grid">
+      <div class="lede-col">
+        <p class="lede">Computer Science graduate who builds software across <strong>mobile apps, REST APIs and embedded devices</strong>, with hands-on experience troubleshooting hardware, software and networks for real users.</p>
+        <div class="actions">
+          <a class="btn primary" href="#contact">Get in touch
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn" href="https://www.linkedin.com/in/mursal-aljahmi">LinkedIn</a>
+        </div>
+      </div>
+
+      <dl class="spec">
+        <dt>Degree</dt><dd>B.S. Computer Science</dd>
+        <dt>School</dt><dd>Wayne State University, 2024</dd>
+        <dt>GPA</dt><dd>3.5 (major)</dd>
+        <dt>Location</dt><dd>Detroit, Michigan</dd>
+        <dt>Looking for</dt><dd>Software engineering, IT and manufacturing systems roles</dd>
+      </dl>
+    </div>
+  </div>
+
+  <section id="projects" aria-labelledby="projects-h">
+    <div class="sec-head"><h2 id="projects-h">Projects</h2><span>4 builds</span></div>
+    <div class="projects">
+      <article class="project">
+        <div class="kind">Capstone · Mobile + ML</div>
+        <h3>Cross-platform Android app with a trained model</h3>
+        <p>Built a Flutter/Dart Android app backed by a Flask REST API. Trained a custom machine learning model that powers the app's core feature. Worked with the team to define requirements, track milestones and deliver on schedule.</p>
+        <ul class="tags"><li>Flutter</li><li>Dart</li><li>Flask</li><li>Python</li><li>REST API</li><li>Machine learning</li></ul>
+      </article>
+      <article class="project">
+        <div class="kind">Embedded systems</div>
+        <h3>Wireless braille keypad</h3>
+        <p>Engineered a braille input keypad on Arduino and ESP32 that sends characters over Bluetooth. Iterated on the hardware design with the team and validated the device through testing.</p>
+        <ul class="tags"><li>Arduino</li><li>ESP32</li><li>Bluetooth</li><li>C/C++</li></ul>
+      </article>
+      <article class="project">
+        <div class="kind">Hackathon · Sparta Hack 8</div>
+        <h3>App built under hackathon deadlines</h3>
+        <p>Built key features including the user interface and real-time notifications, and helped deliver a working, polished product in a competitive, time-boxed event.</p>
+        <ul class="tags"><li>UI</li><li>Real-time notifications</li><li>Teamwork</li></ul>
+      </article>
+      <article class="project">
+        <div class="kind">Game development</div>
+        <h3>Video game in Unity</h3>
+        <p>Programmed the game logic, mechanics and UI systems, and optimized them to improve graphics and audio quality.</p>
+        <ul class="tags"><li>Unity</li><li>Game logic</li><li>UI systems</li></ul>
+      </article>
+    </div>
+  </section>
+
+  <section id="experience" aria-labelledby="exp-h">
+    <div class="sec-head"><h2 id="exp-h">Experience</h2><span>2021 – 2025</span></div>
+    <div class="jobs">
+      <div class="job key">
+        <div class="when">Nov 2021 – Sep 2022</div>
+        <div class="job-body">
+          <h3>IT Help Desk Support</h3>
+          <div class="org">JMS and Associates</div>
+          <ul>
+            <li>Resolved 100+ technical issues by finding root causes and putting long-term fixes in place.</li>
+            <li>Troubleshot software, hardware and network problems for end users, reducing recurring incidents.</li>
+            <li>Worked with a cross-functional team on complex issues to minimize user downtime.</li>
+            <li>Documented problems and solutions in the ticketing system, cutting resolution time for repeat issues.</li>
+            <li>Supported software installations, updates and configurations.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">Dec 2022 – Mar 2025</div>
+        <div class="job-body">
+          <h3>Delivery Driver</h3>
+          <div class="org">Amazon DSP</div>
+          <ul>
+            <li>Completed 100–200 deliveries a day while consistently meeting performance metrics.</li>
+            <li>Coordinated routing and resolved issues with dispatch and customers through mobile platforms.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="job">
+        <div class="when">Mar 2025 – Jun 2025</div>
+        <div class="job-body">
+          <h3>Retail Sales Associate</h3>
+          <div class="org">Shell</div>
+          <ul>
+            <li>Handled high-volume customer transactions on a POS system and supported daily store operations.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" aria-labelledby="skills-h">
+    <div class="sec-head"><h2 id="skills-h">Skills</h2></div>
+    <div class="skills">
+      <div class="skill-row">
+        <div class="label">Languages</div>
+        <ul class="chips"><li>Python</li><li>Java</li><li>C++</li><li>C</li><li>C#</li><li>JavaScript</li><li>Dart</li><li>SQL</li><li>PHP</li><li>HTML</li></ul>
+      </div>
+      <div class="skill-row">
+        <div class="label">Frameworks</div>
+        <ul class="chips"><li>Flutter</li><li>Flask</li></ul>
+      </div>
+      <div class="skill-row">
+        <div class="label">Tools</div>
+        <ul class="chips"><li>GitHub</li><li>VS Code</li><li>IntelliJ</li><li>Microsoft Office</li></ul>
+      </div>
+      <div class="skill-row">
+        <div class="label">Hardware</div>
+        <ul class="chips"><li>Arduino</li><li>ESP32</li><li>Bluetooth</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Let's talk.</h2>
+    <p>I'm available now for full-time roles in the Detroit area. The fastest way to reach me is email.</p>
+    <div class="lines">
+      <div><span>Email</span><a href="mailto:mursalaljahmi1@gmail.com">mursalaljahmi1@gmail.com</a></div>
+      <div><span>LinkedIn</span><a href="https://www.linkedin.com/in/mursal-aljahmi">linkedin.com/in/mursal-aljahmi</a></div>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="copy-email" type="button">Copy email address</button>
+      <span class="copied" id="copy-status" role="status"></span>
+    </div>
+  </section>
+
+  <footer>
+    <span>Mursal Aljahmi · Detroit, MI</span>
+    <span>B.S. Computer Science, Wayne State University</span>
+  </footer>
+
+</div>
+<script>
+  (function () {
+    var root = document.documentElement;
+    var toggle = document.getElementById("theme-toggle");
+    var label = document.getElementById("theme-label");
+    var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+
+    function current() {
+      var t = root.getAttribute("data-theme");
+      if (t === "dark" || t === "light") return t;
+      return mq && mq.matches ? "dark" : "light";
+    }
+    function sync() {
+      var isDark = current() === "dark";
+      label.textContent = isDark ? "Light" : "Dark";
+      toggle.setAttribute("aria-pressed", isDark ? "true" : "false");
+    }
+    toggle.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("ma-theme", next); } catch (e) {}
+      sync();
+    });
+    if (mq && mq.addEventListener) mq.addEventListener("change", sync);
+    // The host app may change data-theme on its own; keep the label in step.
+    new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    sync();
+
+    var btn = document.getElementById("copy-email");
+    var status = document.getElementById("copy-status");
+    btn.addEventListener("click", function () {
+      var addr = "mursalaljahmi1@gmail.com";
+      try {
+        navigator.clipboard.writeText(addr).then(function () {
+          status.textContent = "Copied.";
+        }, function () {
+          status.textContent = "Couldn't copy. The address is shown above.";
+        });
+      } catch (e) {
+        status.textContent = "Couldn't copy. The address is shown above.";
+      }
+    });
+  })();
+</script>
+</body>
+</html>
